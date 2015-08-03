@@ -26,11 +26,9 @@ Memory.monitor = function(history, callback) {
       var localAmt = lines[x];
       if (localAmt.indexOf(':rbytes64') !== -1) {
 	  data.in += parseInt(localAmt.split(/\s+/)[1]);
-	  console.log(data.in);
       }
       if (localAmt.indexOf(':obytes64') !== -1) {
 	  data.out += parseInt(localAmt.split(/\s+/)[1]);
-	  console.log(data.out);
       }
 
     }
