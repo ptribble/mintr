@@ -21,13 +21,9 @@ Memory.monitor = function(history, callback) {
       out: 0,
     };
 
-    var rx = result.match(/\d+:\s+\w+:\s+[\S\s]*?RX:\s+[\S\s]*?(\d+)/g);
-    var tx = result.match(/\d+:\s+\w+:\s+[\S\s]*?TX:\s+[\S\s]*?(\d+)/g);
-      var lines = result.split('\n');
+    var lines = result.split('\n');
     for (var x = 0; x < lines.length; x++) {
-	var localAmt = lines[x];
-	console.log(localAmt);
-	console.log(x);
+      var localAmt = lines[x];
       if (localAmt.indexOf(':rbytes64') !== -1) {
 	  data.in += parseInt(localAmt.split(/\s+/)[1]);
 	  console.log(data.in);
