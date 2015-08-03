@@ -5,7 +5,7 @@ var MAX_NAME_LENGTH = 40;
 var Processes = {};
 
 Processes.monitor = function(history, callback) {
-  exec('ps aux', function(error, result) {
+  exec('ps auxw', function(error, result) {
     var processes = [];
 
     var lines = result.split('\n');
