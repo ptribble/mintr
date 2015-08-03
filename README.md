@@ -1,5 +1,7 @@
 # Mintr
 
+This fork of mintr is for systems running illumos, replacing the Linux-specific code present in the original. The modifications made are minimal, just enough to make it work.
+
 ![Screenshot](http://i.imgur.com/7gYEhQ3.png)
 
 Mintr is a simple unix monitoring tool.  It intentially avoids authentication, and thus does not monitor or display any private information, nor does it allow any actions to be taken from the web interface.
@@ -18,9 +20,12 @@ You can see a demo at http://mintr.kevinbedi.com
 # Installation & Usage
 
 ```
-npm install -g mintr
-mintr
+git clone https://github.com/ptribble/mintr.git
+npm install ./mintr
+./node_modules/.bin/mintr
 ```
+
+Note that you have to make sure you point npm install at the checkout from git, as an unqualified `npm install mintr` will install the Linux original.
 
 If you do not have nodejs/npm, you'll need to install that first.  See https://nodejs.org/ for instructions on this.
 
