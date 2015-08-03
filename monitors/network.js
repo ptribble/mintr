@@ -5,10 +5,10 @@ var os = require('os');
 var Memory = {};
 
 Memory.monitor = function(history, callback) {
-  exec('ip -s link', function(error, result) {
+  exec('kstat -p "::mac:*bytes64"', function(error, result) {
     if (error) {
       console.log(
-        'Mintr uses `ip` to get network information, which your ' +
+        'Mintr uses `kstat` to get network information, which your ' +
         'OS does not support.'
       );
       console.log(error);
@@ -23,23 +23,20 @@ Memory.monitor = function(history, callback) {
 
     var rx = result.match(/\d+:\s+\w+:\s+[\S\s]*?RX:\s+[\S\s]*?(\d+)/g);
     var tx = result.match(/\d+:\s+\w+:\s+[\S\s]*?TX:\s+[\S\s]*?(\d+)/g);
-
-    for (var x = 0; x < rx.length; x++) {
-      var localAmt = rx[x];
-      if (localAmt.indexOf('lo:') !== -1) {
-        continue;
+      var lines = result.split('\n');
+    for (var x = 0; x < lines.length; x++) {
+	var localAmt = lines[x];
+	console.log(localAmt);
+	console.log(x);
+      if (localAmt.indexOf(':rbytes64') !== -1) {
+	  data.in += parseInt(localAmt.split(/\s+/)[1]);
+	  console.log(data.in);
+      }
+      if (localAmt.indexOf(':obytes64') !== -1) {
+	  data.out += parseInt(localAmt.split(/\s+/)[1]);
+	  console.log(data.out);
       }
 
-      data.in += parseInt(localAmt.substring(localAmt.lastIndexOf('\n') + 1));
-    }
-
-    for (var x = 0; x < rx.length; x++) {
-      var localAmt = tx[x];
-      if (localAmt.indexOf('lo:') !== -1) {
-        continue;
-      }
-
-      data.out += parseInt(localAmt.substring(localAmt.lastIndexOf('\n') + 1));
     }
 
     data.timestamp = Date.now();
